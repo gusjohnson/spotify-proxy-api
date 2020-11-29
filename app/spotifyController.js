@@ -1,5 +1,6 @@
 'use strict'
 const spotify = require('./services/spotify')
+const querystring = require('querystring')
 
 async function list(req, res) {
   try {
@@ -12,7 +13,9 @@ async function list(req, res) {
 
 async function get(req, res) {
   try {
-    const path = req.params[0]
+    let path = req.params[0]
+    const query = querystring.stringify(req.query)
+    path += `?${query}`
     if (!path) {
       res.status(400).message('Path is required')
     }
